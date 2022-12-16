@@ -1,0 +1,35 @@
+{
+  "name": "crud-api",
+  "version": "1.0.0",
+  "description": "Simple CRUD API based on node js",
+  "main": "src/server.ts",
+  "scripts": {
+    "start:prod": "npm run build && ts-node src/server.ts",
+    "start:dev": "nodemon",
+    "start:multi": "nodemon ./src/clusterServer.ts",
+    "build": "webpack --config webpack.config.js",
+    "lint": "eslint . --fix",
+    "test": "mocha -r ts-node/register 'src/test/*.ts'"
+  },
+  "keywords": [],
+  "author": "Maria Latysheva",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^18.11.15",
+    "@types/webpack": "^5.28.0",
+    "@typescript-eslint/eslint-plugin": "^5.46.1",
+    "@typescript-eslint/parser": "^5.46.1",
+    "dotenv": "^16.0.3",
+    "eslint": "^8.29.0",
+    "nodemon": "^2.0.20",
+    "prettier": "^2.8.1",
+    "ts-loader": "^9.4.2",
+    "ts-node": "^10.9.1",
+    "webpack": "^5.75.0",
+    "webpack-cli": "^5.0.1"
+  },
+  "dependencies": {
+    "typescript": "^4.9.4",
+    "uuid": "^9.0.0"
+  }
+}
