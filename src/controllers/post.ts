@@ -1,9 +1,14 @@
-export const post = (request, response) => {
-  switch (request.url) {
-    default:
-      response.statusCode = 404;
-      response.write(`Cannot POST ${request.url}`);
-      response.writeHead(404, { 'Content-Type': 'text/plain' });
-      response.end(`Page ${request.url} not found`);
+import { IncomingMessage, ServerResponse } from 'http';
+import { createUser } from './userController';
+
+export const post = (
+  request: IncomingMessage,
+  response: ServerResponse<IncomingMessage>
+) => {
+  if (request.url === '/api/users' || request.url === '/api/users/') {
+    createUser(request, response);
+  } else {
+    response.writeHead(404, { 'Content-Type': 'text/plain' });
+    response.end('Page not found');
   }
-}
+};

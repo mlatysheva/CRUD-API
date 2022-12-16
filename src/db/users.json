@@ -1,0 +1,31 @@
+[
+  {
+    "id": "42eae106-1bfe-4a84-93d9-59ebc85ee4ca",
+    "username": "Yury2",
+    "age": 50,
+    "hobbies": [
+      "cycling",
+      "programming"
+    ]
+  },
+  {
+    "id": "cc11d5f7-4983-4a49-a427-09756db3f1ad",
+    "username": "Maria",
+    "age": 45,
+    "hobbies": [
+      "cycling",
+      "programming"
+    ]
+  },
+  {
+    "id": "046f018f-ac98-4186-9d66-139e6871b9c8",
+    "username": "Polina",
+    "age": 12,
+    "hobbies": [
+      "drawing",
+      "math",
+      "writing",
+      "skating"
+    ]
+  }
+]
