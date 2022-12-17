@@ -6,7 +6,7 @@ import { cwd } from 'process';
 import { get } from './controllers/get';
 import { post } from './controllers/post';
 import { put } from './controllers/put';
-import { deleteR } from './controllers/delete';
+import { remove } from './controllers/delete';
 
 dotenv.config({
   path: resolve(cwd(), '.env'),
@@ -29,7 +29,7 @@ const server = http.createServer((request, response) => {
       break;
 
     case 'DELETE':
-      deleteR(request, response);
+      remove(request, response);
       break;
 
     default:

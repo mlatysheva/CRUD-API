@@ -1,9 +1,15 @@
-export const deleteR = (request, response) => {
-  switch (request.url) {
-    default:
-      response.statusCode = 404;
-      response.write(`Cannot DELETE ${request.url}`);
-      response.writeHead(404, { 'Content-Type': 'text/plain' });
-      response.end(`Page ${request.url} not found`);
+import { IncomingMessage, ServerResponse } from 'http';
+import { deleteUser } from './userController';
+
+export const remove = (
+  request: IncomingMessage,
+  response: ServerResponse<IncomingMessage>
+) => {
+  if (request.url?.match(/\/api\/users\/[a-zA-Z0-9]{1,}/)) {
+    const id = request.url.split('/')[3];
+    deleteUser(request, response, id);
+  } else {
+    response.writeHead(404, { 'Content-Type': 'text/plain' });
+    response.end('Page not found');
   }
-}
+};

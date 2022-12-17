@@ -11,7 +11,7 @@ import { getPostData } from '../utils/getPostData';
 import { uuidValidateV4 } from '../utils/uuidValidate';
 
 // @route GET api/users
-export const getUsers = async (req: IncomingMessage, res: ServerResponse) => {
+export const getUsers = async (_: IncomingMessage, res: ServerResponse) => {
   try {
     const users = await findAllUsers();
     res.writeHead(200, { 'Content-Type': 'application/json' });
@@ -25,7 +25,7 @@ export const getUsers = async (req: IncomingMessage, res: ServerResponse) => {
 
 // @route GET api/users/:id
 export const getUserById = async (
-  req: IncomingMessage,
+  _: IncomingMessage,
   res: ServerResponse,
   id: string
 ) => {
@@ -52,9 +52,7 @@ export const getUserById = async (
 
 export const createUser = async (req: IncomingMessage, res: ServerResponse) => {
   try {
-    console.log(`we are in createUser`);
     const body = await getPostData(req);
-    console.log(`in createUser body is ${body}`);
     const { username, age, hobbies } = JSON.parse(body as string);
 
     const user = {
@@ -72,7 +70,6 @@ export const createUser = async (req: IncomingMessage, res: ServerResponse) => {
       return;
     } else {
       const newUser = await create(user);
-
       res.writeHead(201, { 'Content-Type': 'application/json' });
       return res.end(JSON.stringify(newUser));
     }
@@ -84,7 +81,12 @@ export const createUser = async (req: IncomingMessage, res: ServerResponse) => {
 };
 
 // @route   PUT api/users/:id
-export const updateUser = async (req: any, res: ServerResponse, id: string) => {
+
+export const updateUser = async (
+  req: IncomingMessage,
+  res: ServerResponse,
+  id: string
+) => {
   try {
     const user = (await findUserById(id)) as UserSchema;
     if (!uuidValidateV4(id)) {
@@ -116,7 +118,7 @@ export const updateUser = async (req: any, res: ServerResponse, id: string) => {
 
 // @route   DELETE api/users/:id
 
-export const deleteUser = async (req: any, res: ServerResponse, id: string) => {
+export const deleteUser = async (_: any, res: ServerResponse, id: string) => {
   try {
     const user = (await findUserById(id)) as UserSchema;
     if (!uuidValidateV4(id)) {
