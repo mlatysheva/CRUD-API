@@ -1,19 +1,15 @@
 import { IncomingMessage, ServerResponse } from 'http';
-import {
-  create,
-  findAllUsers,
-  findUserById,
-  update,
-  remove,
-} from '../models/userModel';
+import { UserModel } from '../models/userModel';
 import { UserSchema } from '../models/userSchema';
 import { getPostData } from '../utils/getPostData';
 import { uuidValidateV4 } from '../utils/uuidValidate';
 
+const userModel = new UserModel();
+
 // @route GET api/users
 export const getUsers = async (_: IncomingMessage, res: ServerResponse) => {
   try {
-    const users = await findAllUsers();
+    const users = await userModel.findAllUsers();
     res.writeHead(200, { 'Content-Type': 'application/json' });
     res.end(JSON.stringify(users));
   } catch (error) {
@@ -30,7 +26,7 @@ export const getUserById = async (
   id: string
 ) => {
   try {
-    const user = await findUserById(id);
+    const user = await userModel.findUserById(id);
     if (!uuidValidateV4(id)) {
       res.writeHead(400, { 'Content-Type': 'application/json' });
       res.end(JSON.stringify({ message: `User id ${id} is not a valid uuid` }));
@@ -69,7 +65,7 @@ export const createUser = async (req: IncomingMessage, res: ServerResponse) => {
       );
       return;
     } else {
-      const newUser = await create(user);
+      const newUser = await userModel.create(user);
       res.writeHead(201, { 'Content-Type': 'application/json' });
       return res.end(JSON.stringify(newUser));
     }
@@ -80,7 +76,7 @@ export const createUser = async (req: IncomingMessage, res: ServerResponse) => {
   }
 };
 
-// @route   PUT api/users/:id
+// @route PUT api/users/:id
 
 export const updateUser = async (
   req: IncomingMessage,
@@ -88,7 +84,7 @@ export const updateUser = async (
   id: string
 ) => {
   try {
-    const user = (await findUserById(id)) as UserSchema;
+    const user = (await userModel.findUserById(id)) as UserSchema;
     if (!uuidValidateV4(id)) {
       res.writeHead(400, { 'Content-Type': 'application/json' });
       res.end(JSON.stringify({ message: `User id ${id} is not a valid uuid` }));
@@ -104,7 +100,7 @@ export const updateUser = async (
         hobbies: hobbies || user.hobbies,
       };
 
-      const updUser = await update(id, userData);
+      const updUser = await userModel.update(id, userData);
 
       res.writeHead(200, { 'Content-Type': 'application/json' });
       return res.end(JSON.stringify(updUser));
@@ -120,7 +116,7 @@ export const updateUser = async (
 
 export const deleteUser = async (_: any, res: ServerResponse, id: string) => {
   try {
-    const user = (await findUserById(id)) as UserSchema;
+    const user = (await userModel.findUserById(id)) as UserSchema;
     if (!uuidValidateV4(id)) {
       res.writeHead(400, { 'Content-Type': 'application/json' });
       res.end(JSON.stringify({ message: `User id ${id} is not a valid uuid` }));
@@ -128,7 +124,7 @@ export const deleteUser = async (_: any, res: ServerResponse, id: string) => {
       res.writeHead(404, { 'Content-Type': 'application/json' });
       res.end(JSON.stringify({ message: 'User not found.' }));
     } else {
-      await remove(id);
+      await userModel.remove(id);
       res.writeHead(200, { 'Content-Type': 'application/json' });
       return res.end(JSON.stringify({ message: `User ${id} removed.` }));
     }

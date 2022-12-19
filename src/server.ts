@@ -14,8 +14,6 @@ dotenv.config({
   path: resolve(cwd(), '.env'),
 });
 
-// const PORT = process.env.PORT || 4000;
-
 const server = http.createServer((request, response) => {
   switch (request.method) {
     case 'GET':
@@ -42,7 +40,7 @@ const server = http.createServer((request, response) => {
   }
 });
 
-const PORT = process.env.PORT || 4000;
+const PORT = Number(process.env.PORT) || 4000;
 
 if (process.env.NODE_ENV !== 'cluster') {
   server.listen(PORT, () => {
