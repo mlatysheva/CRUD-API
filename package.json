@@ -2,12 +2,12 @@
   "name": "crud-api",
   "version": "1.0.0",
   "description": "Simple CRUD API based on node js",
-  "main": "server.js",
+  "main": "index.js",
   "scripts": {
     "build": "tsc",
-    "start:dev": "nodemon src/server.ts",
-    "start:multi": "cross-env NODE_ENV=cluster nodemon src/server.ts",
-    "start:prod": "npm run build && cross-env NODE_ENV=production node dist/server.js",
+    "start:dev": "nodemon src/index.ts",
+    "start:multi": "cross-env NODE_ENV=cluster nodemon src/clusterServer.ts",
+    "start:prod": "npm run build && cross-env NODE_ENV=production node dist/index.js",
     "lint": "eslint . --fix",
     "test": "mocha -r ts-node/register 'src/test/*.ts'"
   },
