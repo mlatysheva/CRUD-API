@@ -7,7 +7,7 @@ export const remove = (
 ) => {
   if (request.url?.match(/\/api\/users\/[a-zA-Z0-9]{1,}/)) {
     const id = request.url.split('/')[3];
-    deleteUser(request, response, id);
+    deleteUser(response, id);
   } else {
     response.writeHead(404, { 'Content-Type': 'text/plain' });
     response.end('Page not found');

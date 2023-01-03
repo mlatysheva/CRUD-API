@@ -16,12 +16,12 @@ if (cluster.isPrimary) {
   console.log(`Primary process ${process.pid} is running`);
   // cpus().forEach(() => cluster.fork());
   for (let i = 0; i < totalCPUs; i++) {
-    const worker = cluster.fork();
+    const worker = cluster.fork({port: PORT + i});
 
     worker.on('message', (message) => {
       console.log(`worker received message: ${message}`);
 
-      for (let id in cluster.workers) {
+      for (const id in cluster.workers) {
         cluster.workers[id]?.send(message);
       }
     });
