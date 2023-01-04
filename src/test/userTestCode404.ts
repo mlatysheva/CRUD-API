@@ -2,14 +2,9 @@ import chai from 'chai';
 import chaiHttp from 'chai-http';
 import { server } from '../server';
 
-interface TestFieldsProps {
-  age: number;
-  hobbies: string[];
-}
-
 const id = '4d6f6c0a-8094-4b81-9463-a219469cda86';
 const responseCode = 404;
-const testFields: TestFieldsProps = {
+const testFields = {
   "age": 9,
   "hobbies": [
       "Judo",

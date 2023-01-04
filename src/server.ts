@@ -11,7 +11,7 @@ export const server = http.createServer((request, response) => {
       get(request, response);
       break;
 
-    case 'POST':
+    case 'POST': 
       post(request, response);
       break;
 
@@ -30,5 +30,3 @@ export const server = http.createServer((request, response) => {
       response.end('Page not found');
   }
 });
-
-// # sourceMappingURL=server.js.map

@@ -1,38 +1,18 @@
 import chai from 'chai';
 import chaiHttp from 'chai-http';
 import { server } from '../server';
-import { UserSchema } from '../models/userSchema';
 
-interface TestFieldsProps {
-  age: number;
-  hobbies: string[];
-}
-let usersArray = [];
-let id: string | undefined, successCode: number, numUsers: number, user: UserSchema, testUsername: string, testFields: TestFieldsProps;
-
-if (usersArray.length > 0) {
-  id = usersArray[0].id,
-  successCode = 200,
-  numUsers = usersArray.length,
-  user = {
-    username: usersArray[0].username,
-    age: usersArray[0].age,
-    hobbies: usersArray[0].hobbies,
-  },
-  testUsername = usersArray[0].username,
-  testFields = { age: usersArray[0].age, hobbies: usersArray[0].hobbies};
-} else {
-  usersArray = [];
-  successCode = 200,
-  numUsers = usersArray.length,
-  user = {
-    username: 'polina',
-    age: 12,
-    hobbies: ['drawing', 'music'],
-  },
-  testUsername = 'polina',
-  testFields = { age: user.age, hobbies: user.hobbies };
-}
+let id: string | undefined;
+const usersArray = [];
+const successCode = 200;
+const numUsers = usersArray.length;
+const user = {
+  username: 'polina',
+  age: 12,
+  hobbies: ['drawing', 'music'],
+};
+const testUsername = 'polina';
+const testFields = { age: user.age, hobbies: user.hobbies };
 
 chai.should();
 

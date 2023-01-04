@@ -1,12 +1,6 @@
-import chai, { use } from 'chai';
+import chai from 'chai';
 import chaiHttp from 'chai-http';
 import { server } from '../server';
-import { UserSchema } from '../models/userSchema';
-
-interface TestFieldsProps {
-  age: number;
-  hobbies: string[];
-}
 
 const responseCode = 400;
 const user = {
@@ -17,7 +11,7 @@ const user = {
 
 const id = 'invalid-id';
 
-const testFields: TestFieldsProps = { age: user.age, hobbies: user.hobbies };
+const testFields = { age: user.age, hobbies: user.hobbies };
 
 chai.should();
 
