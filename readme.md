@@ -2,7 +2,26 @@
 
 ## Description
 
-This is a simple CRUD API implemented with nodejs `http` module and using in-memory database to manipulate the data while the app is running.
+This is a simple CRUD API implemented with nodejs `http` core module and using in-memory database to manipulate the data while the app is running. This task was implemented as part of the Nodejs course at the Rolling Scopes School.
+
+## Installation and usage instructions
+
+- Clone the repository by `git clone https://github.com/mlatysheva/CRUD-API.git`
+- `cd` into the cloned repository
+- checkout to `develop` branch by running `git checkout -b develop`
+- Use 18 LTS version of Node.js
+- Start the app in the development mode by running:
+```bash
+npm run start:dev
+```
+- To run the app in the production mode, type:
+```bash
+npm run start:prod
+```
+- To run multiple instances of the app using the nodejs `cluster` module, type:
+```bash
+npm run start:multi
+```
 
 ## Technical requirements
 
