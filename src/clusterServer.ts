@@ -33,7 +33,7 @@ if (cluster.isPrimary) {
 } else {
   const worker = cluster.worker;
   if (worker) {
-    server.addListener('request', (req, res) => {
+    server.addListener('request', (req, _) => {
       console.log(`Worker: ${worker.id}, process: ${process.pid}, method: ${req.method}, url: ${req.url}`);
     });
     process.on('message', (message: UserSchema[]) => {
