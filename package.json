@@ -8,7 +8,6 @@
     "start:dev": "nodemon src/index.ts",
     "start:multi": "cross-env NODE_ENV=cluster nodemon src/clusterServer.ts",
     "start:prod": "npm run build && cross-env NODE_ENV=production node dist/index.js",
-    "lint": "eslint . --fix",
     "test": "mocha -r ts-node/register 'src/test/*.ts'"
   },
   "keywords": [],

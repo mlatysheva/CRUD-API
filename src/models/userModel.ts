@@ -1,6 +1,5 @@
 import { UserSchema } from './userSchema';
 import { v4 as uuidv4 } from 'uuid';
-import { pid } from 'process';
 
 class UserModel {
   public users: UserSchema[];
@@ -13,7 +12,7 @@ class UserModel {
     return new Promise((resolve, reject) => {
       try {
         const users = this.users;
-        process.send?.(users);
+        process.send?.(users); 
         resolve(this.users);
       } catch (error) {
         reject(new Error(error));

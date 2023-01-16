@@ -18,7 +18,7 @@ if (cluster.isPrimary) {
     currentPort = PORT + i;
     const worker = cluster.fork({ port: currentPort });
     pidToPort[worker.process.pid] = currentPort;
-    console.log(`pidToPort is ${pidToPort[worker.process.pid]}`);
+    console.log(`worker ${worker.id} is on port ${pidToPort[worker.process.pid]}`);
 
     worker.on('message', (message) => {
       for (const id in cluster.workers) {

@@ -10,15 +10,16 @@ This is a simple CRUD API implemented with nodejs `http` core module and using i
 - `cd` into the cloned repository
 - checkout to `develop` branch by running `git checkout -b develop`
 - Use 18 LTS version of Node.js
-- Start the app in the development mode by running:
+
+- To run the app in the development mode, type the following command through the CLI:
 ```bash
 npm run start:dev
 ```
-- To run the app in the production mode, type:
+- To run the app in the production mode, type the following command through the CLI:
 ```bash
 npm run start:prod
 ```
-- To run multiple instances of the app using the nodejs `cluster` module, type:
+- To run multiple instances of the app using the nodejs `cluster` module, type the following command through the CLI:
 ```bash
 npm run start:multi
 ```
