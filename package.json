@@ -2,23 +2,25 @@
   "name": "crud-api",
   "version": "1.0.0",
   "description": "Simple CRUD API based on node js",
-  "main": "src/server.ts",
+  "main": "index.js",
   "scripts": {
-    "start:prod": "npm run build && ts-node src/server.ts",
-    "start:dev": "nodemon",
-    "start:multi": "nodemon ./src/clusterServer.ts",
-    "build": "webpack --config webpack.config.js",
-    "lint": "eslint . --fix",
+    "build": "tsc",
+    "start:dev": "nodemon src/index.ts",
+    "start:multi": "cross-env NODE_ENV=cluster nodemon src/clusterServer.ts",
+    "start:prod": "npm run build && cross-env NODE_ENV=production node dist/index.js",
     "test": "mocha -r ts-node/register 'src/test/*.ts'"
   },
   "keywords": [],
   "author": "Maria Latysheva",
   "license": "ISC",
   "devDependencies": {
+    "@types/mocha": "^10.0.1",
     "@types/node": "^18.11.15",
     "@types/webpack": "^5.28.0",
     "@typescript-eslint/eslint-plugin": "^5.46.1",
     "@typescript-eslint/parser": "^5.46.1",
+    "chai": "^4.3.7",
+    "chai-http": "^4.3.0",
     "dotenv": "^16.0.3",
     "eslint": "^8.29.0",
     "nodemon": "^2.0.20",
@@ -29,6 +31,8 @@
     "webpack-cli": "^5.0.1"
   },
   "dependencies": {
+    "cross-env": "^7.0.3",
+    "mocha": "^10.2.0",
     "typescript": "^4.9.4",
     "uuid": "^9.0.0"
   }
