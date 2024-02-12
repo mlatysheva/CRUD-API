@@ -1,5 +1,5 @@
 import { IncomingMessage } from 'http';
-import { UserSchema } from '../models/userSchema';
+import { UserSchema } from '../models/IUser';
 
 export const getRequestData = (
   request: IncomingMessage

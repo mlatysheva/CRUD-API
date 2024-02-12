@@ -1,8 +1,8 @@
-import { UserSchema } from './userSchema';
 import { v4 as uuidv4 } from 'uuid';
+import { IUser } from '../models/IUser';
 
-class UserModel {
-  public users: UserSchema[];
+class UsersDB {
+  public users: IUser[];
 
   constructor() {
     this.users = [];
@@ -15,7 +15,7 @@ class UserModel {
         process.send?.(users); 
         resolve(this.users);
       } catch (error) {
-        reject(new Error(error));
+        reject(new Error(error as string));
       }
     });
   };
@@ -23,12 +23,12 @@ class UserModel {
   findUserById = (id: string) => {
     return new Promise((resolve, reject) => {
       try {
-        const user = this.users.find((user: UserSchema) => user.id === id);
+        const user = this.users.find((user: IUser) => user.id === id);
         const users = this.users;
         process.send?.(users);
         resolve(user);
       } catch (error) {
-        reject(new Error(error));
+        reject(new Error(error as string));
       }
     });
   };
@@ -42,7 +42,7 @@ class UserModel {
         process.send?.(users);
         resolve(newUser);
       } catch (error) {
-        reject(new Error(error));
+        reject(new Error(error as string));
       }
     });
   };
@@ -59,7 +59,7 @@ class UserModel {
         process.send?.(users);
         resolve(this.users[index]);
       } catch (error) {
-        reject(new Error(error));
+        reject(new Error(error as string));
       }
     });
   };
@@ -72,10 +72,10 @@ class UserModel {
         process.send?.(users);
         resolve();
       } catch (error) {
-        reject(new Error(error));
+        reject(new Error(error as string));
       }
     });
   };
 }
 
-export default new UserModel();
+export default new UsersDB();
