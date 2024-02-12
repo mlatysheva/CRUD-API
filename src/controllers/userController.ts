@@ -1,19 +1,21 @@
-import { IncomingMessage, ServerResponse } from 'http';
-import UserModel from '../models/userModel';
-import { UserSchema } from '../models/userSchema';
+import { IncomingMessage, ServerResponse } from 'node:http';
+import { IUser } from '../models/IUser';
 import { getPostData } from '../utils/getPostData';
 import { uuidValidateV4 } from '../utils/uuidValidate';
-
-// const userModel = new UserModel();
+import UsersDB from '../database/UsersDB';
 
 // @route GET api/users
 export const getUsers = async (res: ServerResponse) => {
   try {
-    const users = await UserModel.findAllUsers();
-    res.writeHead(200, { 'Content-Type': 'application/json' });
+    const users = await UsersDB.findAllUsers();
+    res.writeHead(200, { 
+      'Content-Type': 'application/json' 
+    });
     res.end(JSON.stringify(users));
   } catch (error) {
-    res.writeHead(500, { 'Content-Type': 'application/json' });
+    res.writeHead(500, { 
+      'Content-Type': 'application/json' 
+    });
     res.end(JSON.stringify({ message: `Error processing your request: ${error}` }));
   }
 };
@@ -24,20 +26,34 @@ export const getUserById = async (
   id: string
 ) => {
   try {
-    const user = await UserModel.findUserById(id);
+    const user = await UsersDB.findUserById(id);
     if (!uuidValidateV4(id)) {
-      res.writeHead(400, { 'Content-Type': 'application/json' });
-      res.end(JSON.stringify({ message: `User id ${id} is not a valid uuid` }));
+      res.writeHead(400, { 
+        'Content-Type': 'application/json' 
+      });
+      res.end(JSON.stringify({ 
+        message: `User id ${id} is not a valid uuid` 
+      }));
     } else if (!user) {
-      res.writeHead(404, { 'Content-Type': 'application/json' });
-      res.end(JSON.stringify({ message: 'User not found' }));
+      res.writeHead(404, { 
+        'Content-Type': 'application/json' 
+      });
+      res.end(JSON.stringify({ 
+        message: 'User not found' 
+      }));
     } else {
-      res.writeHead(200, { 'Content-Type': 'application/json' });
+      res.writeHead(200, { 
+        'Content-Type': 'application/json' 
+      });
       res.end(JSON.stringify(user));
     }
   } catch (error) {
-    res.writeHead(500, { 'Content-Type': 'application/json' });
-    res.end(JSON.stringify({ message: `Error getting user with id ${id}: ${error}` }));
+    res.writeHead(500, { 
+      'Content-Type': 'application/json' 
+    });
+    res.end(JSON.stringify({ 
+      message: `Error getting user with id ${id}: ${error}` 
+    }));
   }
 };
 
@@ -54,7 +70,9 @@ export const createUser = async (req: IncomingMessage, res: ServerResponse) => {
       hobbies,
     };
     if (!username || !age || !hobbies) {
-      res.writeHead(400, { 'Content-Type': 'application/json' });
+      res.writeHead(400, { 
+        'Content-Type': 'application/json' 
+      });
       res.end(
         JSON.stringify({
           message: `Fields: username, age and hobbies are required. Please submit all required info.`,
@@ -62,13 +80,19 @@ export const createUser = async (req: IncomingMessage, res: ServerResponse) => {
       );
       return;
     } else {
-      const newUser = await UserModel.create(user);
-      res.writeHead(201, { 'Content-Type': 'application/json' });
+      const newUser = await UsersDB.create(user);
+      res.writeHead(201, { 
+        'Content-Type': 'application/json' 
+      });
       return res.end(JSON.stringify(newUser));
     }
   } catch (error) {
-    res.writeHead(500, { 'Content-Type': 'application/json' });
-    res.end(JSON.stringify({ message: `Error creating user: ${error}` }));
+    res.writeHead(500, { 
+      'Content-Type': 'application/json' 
+    });
+    res.end(JSON.stringify({ 
+      message: `Error creating user: ${error}` 
+    }));
   }
 };
 
@@ -80,13 +104,21 @@ export const updateUser = async (
   id: string
 ) => {
   try {
-    const user = (await UserModel.findUserById(id)) as UserSchema;
+    const user = (await UsersDB.findUserById(id)) as IUser;
     if (!uuidValidateV4(id)) {
-      res.writeHead(400, { 'Content-Type': 'application/json' });
-      res.end(JSON.stringify({ message: `User id ${id} is not a valid uuid` }));
+      res.writeHead(400, { 
+        'Content-Type': 'application/json' 
+      });
+      res.end(JSON.stringify({ 
+        message: `User id ${id} is not a valid uuid` 
+      }));
     } else if (!user) {
-      res.writeHead(404, { 'Content-Type': 'application/json' });
-      res.end(JSON.stringify({ message: 'User not found' }));
+      res.writeHead(404, { 
+        'Content-Type': 'application/json' 
+      });
+      res.end(JSON.stringify({ 
+        message: 'User not found' 
+      }));
     } else {
       const body = await getPostData(req);
       const { username, age, hobbies } = JSON.parse(body as string);
@@ -96,15 +128,21 @@ export const updateUser = async (
         hobbies: hobbies || user.hobbies,
       };
 
-      const updUser = await UserModel.update(id, userData);
+      const updUser = await UsersDB.update(id, userData);
 
-      res.writeHead(200, { 'Content-Type': 'application/json' });
+      res.writeHead(200, { 
+        'Content-Type': 'application/json' 
+      });
       return res.end(JSON.stringify(updUser));
     }
   } catch (error) {
     res.statusCode = 500;
-    res.writeHead(500, { 'Content-Type': 'application/json' });
-    res.end(JSON.stringify({ message: `Error updating user with id ${id}: ${error}`}));
+    res.writeHead(500, { 
+      'Content-Type': 'application/json' 
+    });
+    res.end(JSON.stringify({ 
+      message: `Error updating user with id ${id}: ${error}`
+    }));
   }
 };
 
@@ -112,20 +150,36 @@ export const updateUser = async (
 
 export const deleteUser = async (res: ServerResponse, id: string) => {
   try {
-    const user = (await UserModel.findUserById(id)) as UserSchema;
+    const user = (await UsersDB.findUserById(id)) as IUser;
     if (!uuidValidateV4(id)) {
-      res.writeHead(400, { 'Content-Type': 'application/json' });
-      res.end(JSON.stringify({ message: `User id ${id} is not a valid uuid` }));
+      res.writeHead(400, { 
+        'Content-Type': 'application/json' 
+      });
+      res.end(JSON.stringify({ 
+        message: `User id ${id} is not a valid uuid` 
+      }));
     } else if (!user) {
-      res.writeHead(404, { 'Content-Type': 'application/json' });
-      res.end(JSON.stringify({ message: 'User not found' }));
+      res.writeHead(404, { 
+        'Content-Type': 'application/json' 
+      });
+      res.end(JSON.stringify({ 
+        message: 'User not found' 
+      }));
     } else {
-      await UserModel.remove(id);
-      res.writeHead(200, { 'Content-Type': 'application/json' });
-      return res.end(JSON.stringify({ message: `User ${id} removed` }));
+      await UsersDB.remove(id);
+      res.writeHead(200, { 
+        'Content-Type': 'application/json' 
+      });
+      return res.end(JSON.stringify({ 
+        message: `User ${id} removed` 
+      }));
     }
   } catch (error) {
-    res.writeHead(500, { 'Content-Type': 'application/json' });
-    res.end(JSON.stringify({ message: `Error deleting user with id ${id}: ${error}` }));
+    res.writeHead(500, { 
+      'Content-Type': 'application/json' 
+    });
+    res.end(JSON.stringify({ 
+      message: `Error deleting user with id ${id}: ${error}` 
+    }));
   }
 };

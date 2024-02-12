@@ -1,8 +1,8 @@
-import cluster from 'cluster';
-import { cpus } from 'os';
-import UserModel from './models/userModel';
-import { UserSchema } from './models/userSchema';
+import cluster from 'node:cluster';
+import { cpus } from 'node:os';
 import { server } from './server';
+import { IUser } from './models/IUser';
+import UsersDB from './database/UsersDB';
 
 const totalCPUs = cpus().length;
 
@@ -18,7 +18,7 @@ if (cluster.isPrimary) {
     currentPort = PORT + i;
     const worker = cluster.fork({ port: currentPort });
     pidToPort[worker.process.pid] = currentPort;
-    console.log(`worker ${worker.id} is on port ${pidToPort[worker.process.pid]}`);
+    console.log(`Worker ${worker.id} is on port ${pidToPort[worker.process.pid]}`);
 
     worker.on('message', (message) => {
       for (const id in cluster.workers) {
@@ -36,12 +36,12 @@ if (cluster.isPrimary) {
     server.addListener('request', (req, _) => {
       console.log(`Worker: ${worker.id}, process: ${process.pid}, method: ${req.method}, url: ${req.url}`);
     });
-    process.on('message', (message: UserSchema[]) => {
-      UserModel.users = message;
+    process.on('message', (message: IUser[]) => {
+      UsersDB.users = message;
     }); 
     server.listen(currentPort, () => {
       console.log(`Server is running on port ${currentPort}`);
     });
   }
-  console.log(`Worker with pid ${process.pid} and id ${worker.id} launched`);
+  console.log(`Worker with pid ${process.pid} and id ${worker?.id} launched`);
 }

@@ -1,5 +1,5 @@
 #! /usr/bin/env node
-import http from 'http';
+import http from 'node:http';
 import { get } from './controllers/get';
 import { post } from './controllers/post';
 import { put } from './controllers/put';
@@ -26,7 +26,9 @@ export const server = http.createServer((request, response) => {
     default:
       response.statusCode = 404;
       response.write('Reponse failed');
-      response.writeHead(404, { 'Content-Type': 'text/plain' });
+      response.writeHead(404, { 
+        'Content-Type': 'text/plain' 
+      });
       response.end('Page not found');
   }
 });
